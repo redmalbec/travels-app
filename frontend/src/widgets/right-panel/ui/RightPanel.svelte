@@ -18,6 +18,25 @@
     pict = museum.pict;
   }
 
+  async function handleFunc1() {
+    if (!museum) {
+      alert('Сначала выберите музей');
+      return;
+    }
+
+    const res = await fetch('/api/queue-museum', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(museum),
+    });
+
+    const data = await res.json();
+    if (data.ok) {
+      alert('Команда отправлена. Демон запишет музей в файл.');
+    }
+  }
+
+
   function handleSave() {
     onSave({ country, city, name, rating, pict });
   }
@@ -46,6 +65,6 @@
     <button on:click={handleSave} class="rounded bg-green-600 px-3 py-1 text-sm text-white">BtSave</button>
     <button class="rounded bg-gray-400 px-3 py-1 text-sm text-white">BtFtp</button>
     <button class="rounded bg-gray-400 px-3 py-1 text-sm text-white">BtPrint</button>
-    <button class="rounded bg-gray-400 px-3 py-1 text-sm text-white">BtFunc</button>
+    <button on:click={handleFunc1} class="rounded bg-gray-400 px-3 py-1 text-sm text-white">BtFunc</button>
   </div>
 </div>
